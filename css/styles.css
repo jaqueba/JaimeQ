@@ -1,0 +1,1984 @@
+/* =========================================================
+   JAIME QUESADA PORTFOLIO
+   Main Stylesheet
+========================================================= */
+
+/* =========================================================
+   01. Design Tokens
+========================================================= */
+
+:root {
+  --primary: #05274C;
+  --secondary: #1CAEDD;
+  --tertiary: #646667;
+  --skin: #E8E8E8;
+  --dimm-white: #F8FFFF;
+
+  --button-bg: rgba(248, 255, 255, 0.88);
+  --button-border: rgba(248, 255, 255, 0.55);
+  --button-text: #05274C;
+
+  --card-border: rgba(248, 255, 255, 0.12);
+  --card-bg: rgba(248, 255, 255, 0.06);
+  --card-bg-strong: rgba(248, 255, 255, 0.1);
+  --text-soft: rgba(248, 255, 255, 0.72);
+}
+
+/* =========================================================
+   02. Base
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--primary);
+  color: var(--dimm-white);
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* =========================================================
+   03. Home
+========================================================= */
+
+.home {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+}
+
+.home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(5, 39, 76, 0.35) 0%,
+      rgba(5, 39, 76, 0.05) 45%,
+      rgba(248, 255, 255, 0.05) 100%
+    ),
+    url("../img/bgimage.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(248, 255, 255, 0.04) 0%,
+    rgba(5, 39, 76, 0.1) 45%,
+    rgba(5, 39, 76, 0.35) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.home-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* =========================================================
+   04. Brand Signature
+========================================================= */
+
+.brand-signature {
+  position: absolute;
+  left: clamp(1.25rem, 4vw, 4rem);
+  bottom: clamp(1.25rem, 4vw, 3.5rem);
+  max-width: 460px;
+}
+
+.brand-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+  color: var(--dimm-white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.brand-kicker::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background-color: var(--secondary);
+}
+
+.brand-name {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  color: var(--dimm-white);
+}
+
+.brand-role {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: rgba(248, 255, 255, 0.82);
+}
+
+/* =========================================================
+   05. Home CTA
+========================================================= */
+
+.cta-hotspot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
+
+.main-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.95rem 1.35rem;
+  border: 1px solid var(--button-border);
+  border-radius: 999px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 18px 45px rgba(5, 39, 76, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition:
+    transform 250ms ease,
+    background-color 250ms ease,
+    color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.main-cta::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 999px;
+  border: 1px solid rgba(28, 174, 221, 0.35);
+  opacity: 0;
+  transform: scale(0.92);
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+
+.main-cta:hover {
+  transform: translateY(-3px);
+  background-color: var(--dimm-white);
+  color: var(--primary);
+  box-shadow:
+    0 24px 60px rgba(5, 39, 76, 0.3),
+    0 0 0 6px rgba(28, 174, 221, 0.1);
+}
+
+.main-cta:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.main-cta i {
+  font-size: 1.1rem;
+  color: var(--secondary);
+}
+
+/* =========================================================
+   06. Scroll Hint
+========================================================= */
+
+.scroll-hint {
+  position: absolute;
+  right: clamp(1.25rem, 4vw, 4rem);
+  bottom: clamp(1.25rem, 4vw, 3.5rem);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: rgba(248, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.scroll-hint i {
+  font-size: 1.2rem;
+  color: var(--secondary);
+  animation: floatArrow 1.7s ease-in-out infinite;
+}
+
+@keyframes floatArrow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* =========================================================
+   07. Shared Section Styles
+========================================================= */
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: var(--secondary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-kicker::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background-color: var(--secondary);
+}
+
+.section-title {
+  margin: 0;
+  font-size: clamp(2.25rem, 5vw, 4.75rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+  color: var(--primary);
+}
+
+.section-subtitle {
+  margin: 0.35rem 0 0;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+  color: rgba(248, 255, 255, 0.9);
+}
+
+.section-description {
+  max-width: 700px;
+  margin-top: 1.15rem;
+  margin-bottom: 0;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+/* =========================================================
+   08. About Section
+========================================================= */
+
+.about-section {
+  position: relative;
+  background: var(--dimm-white);
+  color: var(--primary);
+  padding: clamp(5rem, 10vw, 8rem) 0;
+  overflow: hidden;
+}
+
+.about-section::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  right: -160px;
+  top: -160px;
+  background: radial-gradient(
+    circle,
+    rgba(28, 174, 221, 0.22) 0%,
+    rgba(28, 174, 221, 0.08) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.about-intro {
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.035em;
+  color: var(--primary);
+}
+
+.about-copy {
+  max-width: 760px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--tertiary);
+}
+
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* =========================================================
+   09. Buttons
+========================================================= */
+
+.btn-primary-custom,
+.btn-secondary-custom {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 48px;
+  padding: 0.9rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition:
+    transform 250ms ease,
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.btn-primary-custom {
+  background: var(--primary);
+  color: var(--dimm-white);
+  border: 1px solid var(--primary);
+  box-shadow: 0 18px 40px rgba(5, 39, 76, 0.18);
+}
+
+.btn-primary-custom:hover {
+  transform: translateY(-3px);
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--primary);
+  box-shadow:
+    0 24px 60px rgba(5, 39, 76, 0.22),
+    0 0 0 6px rgba(28, 174, 221, 0.12);
+}
+
+.btn-secondary-custom {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid rgba(5, 39, 76, 0.18);
+}
+
+.btn-secondary-custom:hover {
+  transform: translateY(-3px);
+  background: rgba(28, 174, 221, 0.08);
+  border-color: rgba(28, 174, 221, 0.5);
+  color: var(--primary);
+}
+
+.btn-primary-custom i,
+.btn-secondary-custom i {
+  font-size: 1.1rem;
+}
+
+/* =========================================================
+   10. Bento Section
+========================================================= */
+
+.bento-section {
+  position: relative;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(28, 174, 221, 0.18) 0%,
+      rgba(28, 174, 221, 0.04) 32%,
+      transparent 58%
+    ),
+    var(--primary);
+  color: var(--dimm-white);
+  padding: clamp(5rem, 10vw, 8rem) 0;
+  overflow: hidden;
+}
+
+.bento-header {
+  max-width: 820px;
+  margin-bottom: 2.25rem;
+}
+
+.bento-section .section-title {
+  color: var(--dimm-white);
+}
+
+/* =========================================================
+   11. Bento Controlled Layout
+========================================================= */
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(165px, auto);
+  grid-template-areas:
+    "leadership leadership art systems"
+    "leadership leadership brands brands"
+    "photography photography execution execution"
+    "ux automation product frontend"
+    "sketches sketches certifications certifications"
+    "beyond beyond beyond contact";
+  gap: 0.85rem;
+}
+
+.bento-area-leadership {
+  grid-area: leadership;
+}
+
+.bento-area-art {
+  grid-area: art;
+}
+
+.bento-area-systems {
+  grid-area: systems;
+}
+
+.bento-area-brands {
+  grid-area: brands;
+}
+
+.bento-area-execution {
+  grid-area: execution;
+}
+
+.bento-area-photography {
+  grid-area: photography;
+}
+
+.bento-area-ux {
+  grid-area: ux;
+}
+
+.bento-area-automation {
+  grid-area: automation;
+}
+
+.bento-area-product {
+  grid-area: product;
+}
+
+.bento-area-frontend {
+  grid-area: frontend;
+}
+
+.bento-area-sketches {
+  grid-area: sketches;
+}
+
+.bento-area-certifications {
+  grid-area: certifications;
+}
+
+.bento-area-beyond {
+  grid-area: beyond;
+}
+
+.bento-area-contact {
+  grid-area: contact;
+}
+
+/* =========================================================
+   12. Bento Cards
+========================================================= */
+
+.bento-card {
+  position: relative;
+  min-height: 165px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.1rem;
+  padding: 1.05rem;
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(248, 255, 255, 0.1) 0%,
+      rgba(248, 255, 255, 0.04) 100%
+    );
+  color: var(--dimm-white);
+  text-align: left;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  font-family: inherit;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 250ms ease,
+    border-color 250ms ease,
+    background-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.bento-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top right,
+    rgba(28, 174, 221, 0.22) 0%,
+    transparent 42%
+  );
+  opacity: 0;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+}
+
+.bento-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(28, 174, 221, 0.55);
+  box-shadow:
+    0 24px 75px rgba(0, 0, 0, 0.18),
+    0 0 0 5px rgba(28, 174, 221, 0.07);
+}
+
+.bento-card:hover::before {
+  opacity: 1;
+}
+
+.bento-card:focus-visible {
+  outline: none;
+  border-color: rgba(28, 174, 221, 0.85);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.2),
+    0 0 0 6px rgba(28, 174, 221, 0.16);
+}
+
+.bento-card.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.bento-card-accent {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28, 174, 221, 0.26) 0%,
+      rgba(248, 255, 255, 0.06) 100%
+    );
+}
+
+.bento-icon {
+  position: relative;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: rgba(248, 255, 255, 0.1);
+  color: var(--secondary);
+  border: 1px solid rgba(248, 255, 255, 0.12);
+}
+
+.bento-icon i {
+  font-size: 1.2rem;
+}
+
+.bento-card h3,
+.bento-card p,
+.bento-action {
+  position: relative;
+  z-index: 2;
+}
+
+.bento-label {
+  margin-bottom: 0.5rem;
+  color: var(--secondary);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.bento-card h3 {
+  margin-bottom: 0.55rem;
+  font-size: clamp(1.08rem, 1.5vw, 1.55rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--dimm-white);
+}
+
+.bento-card p:last-child {
+  margin-bottom: 0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: rgba(248, 255, 255, 0.7);
+}
+
+.bento-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  color: rgba(248, 255, 255, 0.58);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    color 250ms ease,
+    transform 250ms ease;
+}
+
+.bento-action i {
+  font-size: 0.9rem;
+  color: var(--secondary);
+}
+
+.bento-card:hover .bento-action {
+  color: var(--dimm-white);
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   13. Creative Leadership Featured Card
+   Full-background image treatment
+========================================================= */
+
+.bento-leadership-card {
+  position: relative;
+  overflow: hidden;
+  justify-content: flex-end;
+  min-height: 340px;
+  background: var(--primary);
+}
+
+/* 
+  This gradient protects the text area.
+  The image covers the full card, but the left side stays readable.
+*/
+.bento-leadership-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 39, 76, 0.96) 0%,
+      rgba(5, 39, 76, 0.9) 30%,
+      rgba(5, 39, 76, 0.68) 50%,
+      rgba(5, 39, 76, 0.22) 72%,
+      rgba(5, 39, 76, 0.08) 100%
+    );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bento-leadership-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bento-leadership-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /*
+    Horizontal position controls where Jaime sits inside the card.
+    70% usually places the subject toward the right side.
+  */
+  object-position: 70% center;
+
+  transform: scale(1.02);
+  opacity: 0.95;
+  filter: saturate(0.96) contrast(1.02);
+}
+
+.bento-leadership-content {
+  position: relative;
+  z-index: 2;
+  max-width: 48%;
+}
+
+.bento-leadership-card .bento-icon,
+.bento-leadership-card .bento-action {
+  position: relative;
+  z-index: 2;
+}
+
+.bento-leadership-card .bento-action {
+  margin-top: 0.35rem;
+}
+
+/* =========================================================
+   14. Contact Bento Card
+========================================================= */
+
+.bento-contact-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28, 174, 221, 0.22) 0%,
+      rgba(248, 255, 255, 0.06) 100%
+    );
+}
+
+.bento-contact-content {
+  position: relative;
+  z-index: 2;
+}
+
+.bento-contact-links {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+
+.bento-contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 38px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid rgba(248, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(248, 255, 255, 0.08);
+  color: rgba(248, 255, 255, 0.84);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition:
+    transform 250ms ease,
+    background-color 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease;
+}
+
+.bento-contact-links a:hover {
+  transform: translateX(4px);
+  background: rgba(28, 174, 221, 0.16);
+  border-color: rgba(28, 174, 221, 0.45);
+  color: var(--dimm-white);
+}
+
+.bento-contact-links i {
+  font-size: 1rem;
+  color: var(--secondary);
+}
+
+/* =========================================================
+   15. Bento Media Cards
+========================================================= */
+
+.bento-media-card {
+  gap: 1rem;
+}
+
+.bento-media-card .bento-card-content {
+  position: relative;
+  z-index: 3;
+}
+
+.bento-media-card .bento-card-content p:last-child {
+  max-width: 520px;
+}
+
+.bento-area-brands,
+.bento-area-photography,
+.bento-area-product,
+.bento-area-sketches,
+.bento-area-certifications {
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-area-brands .bento-card-content,
+.bento-area-photography .bento-card-content,
+.bento-area-product .bento-card-content,
+.bento-area-sketches .bento-card-content,
+.bento-area-certifications .bento-card-content {
+  flex: 0 0 auto;
+}
+
+.bento-area-brands .brand-carousel,
+.bento-area-photography .image-carousel,
+.bento-area-product .image-carousel,
+.bento-area-sketches .image-carousel,
+.bento-area-certifications .badge-carousel {
+  flex: 1;
+  margin-top: auto;
+}
+
+/* =========================================================
+   16. Mini Carousels
+========================================================= */
+
+.mini-carousel {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 18px;
+  background: rgba(248, 255, 255, 0.06);
+  border: 1px solid rgba(248, 255, 255, 0.08);
+}
+
+.mini-carousel-track {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: max-content;
+  animation: carouselScroll 28s linear infinite;
+}
+
+.mini-carousel:hover .mini-carousel-track {
+  animation-play-state: paused;
+}
+
+.mini-carousel-item {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.mini-carousel-item:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+}
+
+.mini-carousel-item img {
+  pointer-events: none;
+}
+
+@keyframes carouselScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* =========================================================
+   17. Brands Carousel
+========================================================= */
+
+.brand-carousel {
+  min-height: 150px;
+  height: 100%;
+  padding: 1rem;
+  align-items: center;
+}
+
+.brand-carousel .mini-carousel-track {
+  height: 100%;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-carousel .mini-carousel-item {
+  width: 150px;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  padding: 0.85rem;
+  border-radius: 18px;
+  background: rgba(248, 255, 255, 0.92);
+  overflow: hidden;
+}
+
+.brand-carousel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.86;
+  transition:
+    filter 250ms ease,
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+
+.brand-carousel .mini-carousel-item:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+/* =========================================================
+   18. Photography / Product / Sketches Carousel
+========================================================= */
+
+.image-carousel {
+  min-height: 118px;
+  padding: 0.7rem;
+}
+
+.image-carousel .mini-carousel-track {
+  align-items: center;
+}
+
+.image-carousel .mini-carousel-item {
+  width: 132px;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  background: rgba(248, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.image-carousel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 350ms ease;
+}
+
+.image-carousel .mini-carousel-item:hover img {
+  transform: scale(1.08);
+}
+
+.bento-area-photography .image-carousel .mini-carousel-item {
+  width: 138px;
+}
+
+.bento-area-product .image-carousel .mini-carousel-item {
+  width: 124px;
+}
+
+.bento-area-sketches .image-carousel .mini-carousel-item {
+  width: 132px;
+}
+
+/* =========================================================
+   19. Certifications Carousel
+========================================================= */
+
+.badge-carousel {
+  min-height: 118px;
+  padding: 0.7rem;
+}
+
+.badge-carousel .mini-carousel-track {
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.badge-carousel .mini-carousel-item {
+  width: 132px;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  padding: 0;
+  border-radius: 14px;
+  background: rgba(248, 255, 255, 0.92);
+  overflow: hidden;
+}
+
+.badge-carousel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 250ms ease;
+}
+
+.badge-carousel .mini-carousel-item:hover img {
+  transform: scale(1.05);
+}
+
+/* =========================================================
+   20. Profile Modal
+========================================================= */
+
+.profile-modal .modal-dialog {
+  padding: 1rem;
+}
+
+.profile-modal .modal-content {
+  border: 1px solid rgba(248, 255, 255, 0.14);
+  border-radius: 32px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(28, 174, 221, 0.18) 0%,
+      rgba(5, 39, 76, 0.12) 34%,
+      transparent 58%
+    ),
+    var(--primary);
+  color: var(--dimm-white);
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+}
+
+.profile-modal .modal-header {
+  align-items: flex-start;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(248, 255, 255, 0.1);
+}
+
+.modal-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+  color: var(--secondary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.modal-kicker::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: var(--secondary);
+}
+
+.profile-modal .modal-title {
+  max-width: 780px;
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+  color: var(--dimm-white);
+}
+
+.modal-close-btn {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(248, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(248, 255, 255, 0.08);
+  color: var(--dimm-white);
+  transition:
+    transform 250ms ease,
+    background-color 250ms ease,
+    border-color 250ms ease;
+}
+
+.modal-close-btn:hover {
+  transform: rotate(90deg);
+  background: rgba(28, 174, 221, 0.18);
+  border-color: rgba(28, 174, 221, 0.5);
+}
+
+.modal-close-btn i {
+  font-size: 1.25rem;
+}
+
+.profile-modal .modal-body {
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.modal-lead {
+  max-width: 880px;
+  margin-bottom: 2rem;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: -0.035em;
+  color: rgba(248, 255, 255, 0.9);
+}
+
+.modal-story {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-bottom: 2.5rem;
+}
+
+.modal-story h3 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--dimm-white);
+}
+
+.modal-story p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(248, 255, 255, 0.72);
+}
+
+.modal-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(248, 255, 255, 0.1);
+}
+
+.modal-proof-card {
+  padding: 1rem;
+  border: 1px solid rgba(248, 255, 255, 0.1);
+  border-radius: 22px;
+  background: rgba(248, 255, 255, 0.06);
+}
+
+.modal-proof-card span {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--secondary);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.modal-proof-card p {
+  margin: 0;
+  color: rgba(248, 255, 255, 0.76);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   21. Image Viewer Modal
+========================================================= */
+
+.image-viewer-modal .modal-dialog {
+  padding: 1rem;
+}
+
+.image-viewer-modal .modal-content {
+  border: 1px solid rgba(248, 255, 255, 0.14);
+  border-radius: 32px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(28, 174, 221, 0.16) 0%,
+      rgba(5, 39, 76, 0.2) 38%,
+      transparent 62%
+    ),
+    rgba(5, 39, 76, 0.96);
+  color: var(--dimm-white);
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.45);
+}
+
+.image-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1rem 0;
+}
+
+.image-viewer-title {
+  margin: 0;
+  color: rgba(248, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.image-viewer-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  min-height: 60vh;
+}
+
+.image-viewer-body img {
+  display: block;
+  max-width: 100%;
+  max-height: 76vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 22px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================
+   22. Responsive - Tablet
+========================================================= */
+
+@media (max-width: 991px) {
+  .home::before {
+    background-position: center center;
+  }
+
+  .brand-signature {
+    max-width: 360px;
+  }
+
+  .cta-hotspot {
+    top: 50%;
+  }
+
+  .about-section,
+  .bento-section {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .bento-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(155px, auto);
+    grid-template-areas:
+      "leadership leadership"
+      "art systems"
+      "brands brands"
+      "execution execution"
+      "photography photography"
+      "ux automation"
+      "product frontend"
+      "sketches sketches"
+      "certifications certifications"
+      "beyond contact";
+  }
+
+  .bento-card {
+    min-height: 155px;
+  }
+
+    /* Creative Leadership card - Tablet */
+
+  .bento-leadership-card {
+    min-height: 300px;
+  }
+
+  .bento-leadership-photo {
+    inset: 0;
+    width: 100%;
+  }
+
+  .bento-leadership-photo img {
+    object-position: 72% center;
+    transform: scale(1.03);
+  }
+
+  .bento-leadership-content {
+    max-width: 54%;
+  }
+
+  .brand-carousel {
+    min-height: 135px;
+  }
+
+  .brand-carousel .mini-carousel-item {
+    width: 132px;
+    aspect-ratio: 4 / 3;
+    padding: 0.75rem;
+  }
+
+  .modal-story {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-proof-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-modal .modal-header {
+    gap: 1rem;
+  }
+}
+
+/* =========================================================
+   23. Responsive - Mobile
+========================================================= */
+
+@media (max-width: 767px) {
+  .home::before {
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .brand-signature {
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.5rem;
+    max-width: none;
+  }
+
+  .brand-name {
+    max-width: 280px;
+  }
+
+  .brand-role {
+    max-width: 310px;
+  }
+
+  .cta-hotspot {
+    top: 48%;
+  }
+
+  .main-cta {
+    padding: 0.85rem 1.15rem;
+    font-size: 0.78rem;
+  }
+
+  .scroll-hint {
+    display: none;
+  }
+
+  .about-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primary-custom,
+  .btn-secondary-custom {
+    width: 100%;
+  }
+
+  .bento-section {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .bento-header {
+    margin-bottom: 1.75rem;
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    grid-template-areas:
+      "leadership"
+      "art"
+      "systems"
+      "brands"
+      "execution"
+      "photography"
+      "ux"
+      "automation"
+      "product"
+      "frontend"
+      "sketches"
+      "certifications"
+      "beyond"
+      "contact";
+    gap: 0.75rem;
+  }
+
+  .bento-card {
+    min-height: auto;
+    padding: 1rem;
+    border-radius: 20px;
+    gap: 0.9rem;
+  }
+
+  button.bento-card {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    align-items: start;
+  }
+
+  button.bento-card .bento-icon {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  button.bento-card > div:not(.bento-icon) {
+    grid-column: 2;
+  }
+
+  button.bento-card .bento-action {
+    grid-column: 2;
+    margin-top: 0.1rem;
+  }
+
+  .bento-card h3 {
+    font-size: 1.05rem;
+  }
+
+  .bento-card p:last-child {
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+    /* Creative Leadership card - Mobile */
+
+  .bento-leadership-card {
+    min-height: 245px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+  }
+
+  .bento-leadership-card::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(5, 39, 76, 0.98) 0%,
+        rgba(5, 39, 76, 0.92) 42%,
+        rgba(5, 39, 76, 0.56) 68%,
+        rgba(5, 39, 76, 0.18) 100%
+      );
+  }
+
+  .bento-leadership-photo {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bento-leadership-photo img {
+    object-fit: cover;
+    object-position: 76% center;
+    transform: scale(1.06);
+  }
+
+  .bento-leadership-content {
+    max-width: 60%;
+  }
+
+  .bento-leadership-card .bento-icon,
+  .bento-leadership-card .bento-leadership-content,
+  .bento-leadership-card .bento-action {
+    position: relative;
+    z-index: 2;
+  }
+
+  .mini-carousel {
+    min-height: 64px;
+  }
+
+  .brand-carousel {
+    min-height: 130px;
+  }
+
+  .brand-carousel .mini-carousel-item {
+    width: 120px;
+    aspect-ratio: 4 / 3;
+    padding: 0.7rem;
+  }
+
+  .image-carousel {
+    min-height: 104px;
+  }
+
+  .image-carousel .mini-carousel-item,
+  .badge-carousel .mini-carousel-item {
+    width: 112px;
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
+
+  .bento-contact-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bento-contact-links a {
+    justify-content: center;
+  }
+}
+
+/* =========================================================
+   24. Responsive - Small Mobile
+========================================================= */
+
+@media (max-width: 575px) {
+  .home::before {
+    background-position: center center;
+  }
+
+  .cta-hotspot {
+    top: 46%;
+  }
+
+  .brand-kicker {
+    font-size: 0.68rem;
+  }
+
+  .brand-name {
+    font-size: 2.25rem;
+  }
+
+  .brand-role {
+    font-size: 0.78rem;
+  }
+
+  .profile-modal .modal-dialog,
+  .image-viewer-modal .modal-dialog {
+    padding: 0.5rem;
+  }
+
+  .profile-modal .modal-content,
+  .image-viewer-modal .modal-content {
+    border-radius: 24px;
+  }
+
+  .profile-modal .modal-header {
+    padding: 1.25rem;
+  }
+
+  .profile-modal .modal-body {
+    padding: 1.25rem;
+  }
+
+  .profile-modal .modal-title {
+    font-size: 2rem;
+  }
+
+  .modal-lead {
+    font-size: 1rem;
+  }
+
+  .modal-story p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+
+  .modal-close-btn {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+
+  .image-viewer-header {
+    padding: 0.85rem 0.85rem 0;
+  }
+
+  .image-viewer-body {
+    min-height: 55vh;
+    padding: 0.85rem;
+  }
+
+  .image-viewer-body img {
+    max-height: 70vh;
+    border-radius: 16px;
+  }
+}
+
+/* =========================================================
+   25. Reduced Motion
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-carousel-track,
+  .scroll-hint i {
+    animation: none;
+  }
+
+  .main-cta,
+  .bento-card,
+  .btn-primary-custom,
+  .btn-secondary-custom,
+  .modal-close-btn,
+  .brand-carousel img,
+  .image-carousel img,
+  .badge-carousel img {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   26. Mobile Refinements
+   Final polish for hero, about, bento and featured card
+========================================================= */
+
+@media (max-width: 767px) {
+
+  /* -------------------------
+     Home / Hero Mobile
+  ------------------------- */
+
+  .home {
+    min-height: 92vh;
+  }
+
+  .home::before {
+    background-size: cover;
+    background-position: center top;
+  }
+
+  .home::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(5, 39, 76, 0.05) 0%,
+        rgba(5, 39, 76, 0.18) 48%,
+        rgba(5, 39, 76, 0.58) 100%
+      );
+  }
+
+  .cta-hotspot {
+    top: 42%;
+  }
+
+  .main-cta {
+    padding: 0.72rem 1rem;
+    font-size: 0.72rem;
+    box-shadow:
+      0 14px 35px rgba(5, 39, 76, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+
+  .brand-signature {
+    bottom: 1.15rem;
+  }
+
+  .brand-name {
+    font-size: clamp(2rem, 12vw, 2.65rem);
+    max-width: 260px;
+  }
+
+  .brand-role {
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    max-width: 270px;
+  }
+
+  /* -------------------------
+     About Mobile
+  ------------------------- */
+
+  .about-section {
+    padding-top: 4.25rem;
+    padding-bottom: 4.25rem;
+  }
+
+  .about-section .section-title {
+    font-size: clamp(2rem, 10vw, 3rem);
+    line-height: 0.98;
+    letter-spacing: -0.065em;
+  }
+
+  .about-intro {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    letter-spacing: -0.03em;
+  }
+
+  .about-copy {
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .about-actions {
+    margin-top: 1.65rem;
+  }
+
+  /* -------------------------
+     Bento Header Mobile
+  ------------------------- */
+
+  .bento-section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .bento-header {
+    margin-bottom: 1.6rem;
+  }
+
+  .bento-section .section-title {
+    font-size: clamp(2rem, 10vw, 3rem);
+    line-height: 0.96;
+    letter-spacing: -0.065em;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .section-description {
+    margin-top: 1rem;
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+
+  /* -------------------------
+     Bento Cards Mobile
+  ------------------------- */
+
+  .bento-grid {
+    gap: 0.65rem;
+  }
+
+  .bento-card {
+    padding: 0.9rem;
+    border-radius: 18px;
+  }
+
+  .bento-label {
+    font-size: 0.56rem;
+    letter-spacing: 0.13em;
+  }
+
+  .bento-card h3 {
+    font-size: 1rem;
+    line-height: 1.05;
+  }
+
+  .bento-card p:last-child {
+    font-size: 0.74rem;
+    line-height: 1.45;
+  }
+
+  .bento-action {
+    font-size: 0.58rem;
+  }
+
+  .bento-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+  }
+
+  .bento-icon i {
+    font-size: 1.05rem;
+  }
+
+  /* -------------------------
+     Creative Leadership Card Mobile
+     Full-background image treatment
+     ------------------------- */
+
+  .bento-leadership-card {
+    min-height: 245px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    background: var(--primary);
+  }
+
+  .bento-leadership-card::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(5, 39, 76, 0.98) 0%,
+        rgba(5, 39, 76, 0.94) 42%,
+        rgba(5, 39, 76, 0.68) 60%,
+        rgba(5, 39, 76, 0.28) 78%,
+        rgba(5, 39, 76, 0.1) 100%
+      );
+  }
+
+  .bento-leadership-photo {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bento-leadership-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 72% center;
+    transform: scale(1.02);
+  }
+
+  .bento-leadership-content {
+    max-width: 60%;
+  }
+
+  .bento-leadership-card .bento-icon,
+  .bento-leadership-card .bento-leadership-content,
+  .bento-leadership-card .bento-action {
+    position: relative;
+    z-index: 2;
+  }
+
+  .bento-leadership-card .bento-action {
+    margin-top: 0.35rem;
+  }
+
+  /* -------------------------
+     Compact Media Cards Mobile
+  ------------------------- */
+
+  .bento-media-card {
+    gap: 0.75rem;
+  }
+
+  .mini-carousel {
+    border-radius: 14px;
+  }
+
+  .brand-carousel {
+    min-height: 104px;
+    padding: 0.65rem;
+  }
+
+  .brand-carousel .mini-carousel-track {
+    gap: 0.65rem;
+  }
+
+  .brand-carousel .mini-carousel-item {
+    width: 104px;
+    padding: 0.55rem;
+    border-radius: 12px;
+  }
+
+  .image-carousel,
+  .badge-carousel {
+    min-height: 92px;
+    padding: 0.55rem;
+  }
+
+  .image-carousel .mini-carousel-track,
+  .badge-carousel .mini-carousel-track {
+    gap: 0.65rem;
+  }
+
+  .image-carousel .mini-carousel-item,
+  .badge-carousel .mini-carousel-item {
+    width: 98px;
+    border-radius: 12px;
+  }
+
+  .bento-area-photography .image-carousel .mini-carousel-item,
+  .bento-area-product .image-carousel .mini-carousel-item,
+  .bento-area-sketches .image-carousel .mini-carousel-item {
+    width: 98px;
+  }
+
+  /* -------------------------
+     Contact Card Mobile
+  ------------------------- */
+
+  .bento-contact-links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .bento-contact-links a {
+    justify-content: center;
+    min-height: 36px;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.68rem;
+  }
+}
+
+@media (max-width: 575px) {
+
+  /* More control for very small screens */
+
+  .home {
+    min-height: 88vh;
+  }
+
+  .cta-hotspot {
+    top: 40%;
+  }
+
+  /* Creative Leadership card - Small Mobile */
+
+  .bento-leadership-card {
+    min-height: 230px;
+  }
+
+  .bento-leadership-card::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(5, 39, 76, 0.99) 0%,
+        rgba(5, 39, 76, 0.95) 44%,
+        rgba(5, 39, 76, 0.72) 62%,
+        rgba(5, 39, 76, 0.32) 80%,
+        rgba(5, 39, 76, 0.12) 100%
+      );
+  }
+
+  .bento-leadership-photo {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bento-leadership-photo img {
+    object-position: 74% center;
+    transform: scale(1.03);
+  }
+
+  .bento-leadership-content {
+    max-width: 64%;
+  }
+
+  .bento-leadership-content h3 {
+    max-width: 170px;
+  }
+
+  .bento-leadership-content p:last-child {
+    max-width: 205px;
+  }
+}

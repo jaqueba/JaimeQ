@@ -1,0 +1,201 @@
+{
+  "creative-leadership": {
+  "kicker": "Core strength",
+  "title": "Creative Leadership",
+  "lead": "For me, creative leadership is not only about having ideas. It is about creating enough clarity, structure, and momentum for teams to move with confidence.",
+  "heading": "Turning ambiguity into direction.",
+  "paragraphs": [
+    "A large part of my work has happened in spaces where the challenge is not just visual execution, but alignment. Clients need direction, teams need context, and the work needs to move without losing quality along the way.",
+    "That has shaped the way I lead: translating business needs into creative intent, helping define effort and execution paths, and connecting design decisions with the realities of production, timelines, team capacity, and delivery."
+  ],
+  "proof": [
+    {
+      "label": "Leadership",
+      "text": "Guiding teams through creative execution, feedback, prioritization, and delivery."
+    },
+    {
+      "label": "Client-facing",
+      "text": "Gathering requirements, aligning expectations, and translating business needs into creative direction."
+    },
+    {
+      "label": "DesignOps mindset",
+      "text": "Estimating effort, organizing workflows, and helping teams move from creative direction to execution."
+    }
+  ]
+},
+  "art-direction": {
+    "kicker": "Visual craft",
+    "title": "Art Direction",
+    "lead": "Art direction is where the idea becomes visible. It is the discipline of making creative choices feel intentional, not decorative.",
+    "heading": "Making the visual decision serve the idea.",
+    "paragraphs": [
+      "My approach to art direction is grounded in clarity. I care about composition, hierarchy, rhythm, visual tension, and brand consistency, but always in service of what the piece needs to communicate.",
+      "I like work that feels crafted, but not overdesigned. Work that knows when to be bold and when to step back. That balance is especially important when designing for brands, campaigns, digital experiences, or scalable systems.",
+      "Because I have worked across production, UI, advertising, and brand experiences, I tend to see art direction as a bridge between concept and execution. A strong visual direction should inspire the work, but also make it easier to produce consistently."
+    ],
+    "proof": [
+      {
+        "label": "Visual systems",
+        "text": "Creating cohesive visual directions across formats, channels, and deliverables."
+      },
+      {
+        "label": "Brand consistency",
+        "text": "Maintaining quality and alignment while adapting to different contexts."
+      },
+      {
+        "label": "Craft",
+        "text": "Using hierarchy, composition, contrast, and detail to strengthen communication."
+      }
+    ]
+  },
+  "design-systems": {
+    "kicker": "Systems thinking",
+    "title": "Design Systems",
+    "lead": "A design system is not just a library. It is a way of making better decisions repeatable.",
+    "heading": "Designing consistency without killing flexibility.",
+    "paragraphs": [
+      "My interest in design systems comes from a practical place: teams move faster when they do not have to solve the same problem from zero every time.",
+      "I think about systems as living structures. They need rules, but they also need enough flexibility to support real work. The goal is not to control every possible decision, but to create foundations that improve quality, consistency, and speed.",
+      "This connects strongly with creative leadership because a good system helps scale taste. It allows teams to maintain visual standards, reduce production friction, and focus more energy on meaningful decisions."
+    ],
+    "proof": [
+      {
+        "label": "Structure",
+        "text": "Tokens, components, variants, patterns, and reusable design logic."
+      },
+      {
+        "label": "Scalability",
+        "text": "Helping teams produce more without sacrificing consistency."
+      },
+      {
+        "label": "Governance",
+        "text": "Balancing standards, flexibility, documentation, and real-world use cases."
+      }
+    ]
+  },
+  "scalable-execution": {
+    "kicker": "Production mindset",
+    "title": "Scalable Execution",
+    "lead": "Ideas matter, but the ability to execute them reliably is what turns creative work into business value.",
+    "heading": "Where creative ambition meets delivery.",
+    "paragraphs": [
+      "One of the strongest parts of my profile is that I understand the production side of creativity. I have worked in high-volume environments where quality, speed, consistency, and precision all matter at the same time.",
+      "That experience changed the way I think. I do not see execution as the end of the creative process. I see it as part of the idea. A concept that cannot be produced well, adapted clearly, or delivered consistently is not fully solved.",
+      "This is why I care about workflows, QA, documentation, and scalable templates. They are not administrative details. They are the infrastructure that allows creative teams to deliver better work under real conditions."
+    ],
+    "proof": [
+      {
+        "label": "High volume",
+        "text": "Experience delivering digital and branded assets across multiple formats and requirements."
+      },
+      {
+        "label": "QA mindset",
+        "text": "Protecting quality through standards, review, and production discipline."
+      },
+      {
+        "label": "Delivery",
+        "text": "Connecting creative expectations with practical timelines and handoff needs."
+      }
+    ]
+  },
+  "ux-ui": {
+    "kicker": "Experience logic",
+    "title": "UX/UI Thinking",
+    "lead": "UX/UI gives my creative work a stronger sense of structure, behavior, and usability.",
+    "heading": "Designing not just how it looks, but how it works.",
+    "paragraphs": [
+      "My background in UX/UI helps me think beyond the static piece. It pushes me to consider hierarchy, interaction, clarity, user expectations, and the path someone takes through an experience.",
+      "That perspective is useful even outside traditional product design. A campaign, a landing page, a presentation, a design system, or a brand experience all need structure. They all need to guide attention.",
+      "I do not separate visual design from usability. The best digital work usually happens when both are considered together: the piece feels good, communicates clearly, and behaves in a way people can understand."
+    ],
+    "proof": [
+      {
+        "label": "Hierarchy",
+        "text": "Structuring information so users can understand and act."
+      },
+      {
+        "label": "Interaction",
+        "text": "Thinking about behavior, flow, states, and responsive experiences."
+      },
+      {
+        "label": "Digital fluency",
+        "text": "Connecting visual design with practical interface logic."
+      }
+    ]
+  },
+  "creative-automation": {
+    "kicker": "Efficiency",
+    "title": "Creative Automation",
+    "lead": "Automation is not about removing creativity. It is about protecting creative energy from repetitive work.",
+    "heading": "Scaling the repeatable so the team can focus on the meaningful.",
+    "paragraphs": [
+      "I became interested in creative automation because I saw how much time creative teams lose repeating tasks that could be systematized. Resizing, adapting, replacing content, checking variations, and producing large batches of assets can easily consume the energy that should go into better decisions.",
+      "My approach is to identify what can be structured, templated, or automated without compromising the quality of the idea. This can involve Figma components, variables, templates, spreadsheets, naming systems, or front-end logic.",
+      "For creative leadership, this matters because scalability is not only a technical advantage. It is a creative advantage. It gives teams more room to think, refine, and deliver with consistency."
+    ],
+    "proof": [
+      {
+        "label": "Figma systems",
+        "text": "Using components, variants, variables, and templates to scale production."
+      },
+      {
+        "label": "Process thinking",
+        "text": "Identifying repeated tasks and turning them into structured workflows."
+      },
+      {
+        "label": "Efficiency",
+        "text": "Improving speed while protecting quality and consistency."
+      }
+    ]
+  },
+  "front-end": {
+    "kicker": "Cross-functional",
+    "title": "Front-end Collaboration",
+    "lead": "Knowing how digital work is built changes the way you design, lead, and communicate.",
+    "heading": "Bridging the gap between design intention and implementation.",
+    "paragraphs": [
+      "My front-end knowledge helps me collaborate more effectively with developers and technical teams. I can understand constraints, anticipate implementation questions, and design with a clearer sense of what needs to happen after the mockup.",
+      "This does not mean turning every creative role into a development role. It means reducing the distance between the idea and the build. It helps avoid unnecessary friction and creates more productive conversations.",
+      "For leadership roles, that fluency is valuable because many creative decisions eventually become technical conversations. Being able to navigate both languages helps protect the integrity of the work."
+    ],
+    "proof": [
+      {
+        "label": "Technical fluency",
+        "text": "Understanding HTML, CSS, JavaScript, responsive behavior, and handoff needs."
+      },
+      {
+        "label": "Collaboration",
+        "text": "Working more effectively with developers and cross-functional teams."
+      },
+      {
+        "label": "Execution",
+        "text": "Designing with a practical understanding of how digital experiences are built."
+      }
+    ]
+  },
+  "beyond-brief": {
+    "kicker": "Multidisciplinary edge",
+    "title": "Beyond the Brief",
+    "lead": "Some of the most useful parts of my creative profile come from disciplines that do not fit neatly into a job title.",
+    "heading": "The range behind the work.",
+    "paragraphs": [
+      "My background goes beyond design in the traditional sense. Photography, motion, music, production, performance, storytelling, and hands-on creative execution have all influenced the way I think and work.",
+      "I do not see that range as a distraction. I see it as creative depth. It gives me more references, more ways to solve problems, and a stronger sensitivity to rhythm, staging, emotion, timing, and audience perception.",
+      "For me, being multidisciplinary is not about claiming to do everything. It is about having enough range to understand how different creative decisions connect — and enough discipline to know which ones matter for the project in front of me."
+    ],
+    "proof": [
+      {
+        "label": "Range",
+        "text": "Experience across visual, digital, motion, production, and performance-driven disciplines."
+      },
+      {
+        "label": "Perspective",
+        "text": "Using different creative languages to approach problems with more depth."
+      },
+      {
+        "label": "Creative instinct",
+        "text": "Bringing rhythm, storytelling, staging, and audience awareness into the work."
+      }
+    ]
+  }
+}
