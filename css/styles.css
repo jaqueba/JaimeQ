@@ -882,12 +882,35 @@ select {
   border: 1px solid rgba(248, 255, 255, 0.08);
 }
 
+/*
+  The JS creates this structure:
+
+  .mini-carousel
+    .mini-carousel-track
+      .mini-carousel-group
+        .mini-carousel-item
+      .mini-carousel-group
+        .mini-carousel-item
+
+  The two groups allow the marquee animation to loop without rebuilding the DOM.
+*/
+
 .mini-carousel-track {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  flex-wrap: nowrap;
   width: max-content;
   animation: carouselScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.mini-carousel-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+  gap: 0.85rem;
+  padding-right: 0.85rem;
 }
 
 .mini-carousel:hover .mini-carousel-track {
@@ -940,10 +963,9 @@ select {
   align-items: center;
 }
 
-.brand-carousel .mini-carousel-track {
-  height: 100%;
-  align-items: center;
+.brand-carousel .mini-carousel-group {
   gap: 1rem;
+  padding-right: 1rem;
 }
 
 .brand-carousel .mini-carousel-item {
@@ -984,8 +1006,9 @@ select {
   padding: 0.7rem;
 }
 
-.image-carousel .mini-carousel-track {
-  align-items: center;
+.image-carousel .mini-carousel-group {
+  gap: 0.85rem;
+  padding-right: 0.85rem;
 }
 
 .image-carousel .mini-carousel-item {
@@ -1029,9 +1052,9 @@ select {
   padding: 0.7rem;
 }
 
-.badge-carousel .mini-carousel-track {
-  align-items: center;
+.badge-carousel .mini-carousel-group {
   gap: 0.85rem;
+  padding-right: 0.85rem;
 }
 
 .badge-carousel .mini-carousel-item {
@@ -1546,6 +1569,27 @@ select {
   .bento-contact-links a {
     justify-content: center;
   }
+
+    .mini-carousel-group {
+    gap: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .brand-carousel .mini-carousel-group,
+  .image-carousel .mini-carousel-group,
+  .badge-carousel .mini-carousel-group {
+    gap: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .image-viewer-nav-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .image-viewer-title {
+    font-size: 0.66rem;
+  }
 }
 
 /* =========================================================
@@ -1981,4 +2025,55 @@ select {
   .bento-leadership-content p:last-child {
     max-width: 205px;
   }
+}
+
+
+/* =========================================================
+   27. Image Viewer Navigation
+========================================================= */
+
+.image-viewer-header {
+  align-items: center;
+}
+
+.image-viewer-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 0 0 auto;
+}
+
+.image-viewer-nav-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(248, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(248, 255, 255, 0.08);
+  color: var(--dimm-white);
+  transition:
+    transform 250ms ease,
+    background-color 250ms ease,
+    border-color 250ms ease;
+}
+
+.image-viewer-nav-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(28, 174, 221, 0.18);
+  border-color: rgba(28, 174, 221, 0.5);
+}
+
+.image-viewer-nav-btn i {
+  font-size: 1rem;
+  color: var(--secondary);
+}
+
+.image-viewer-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
