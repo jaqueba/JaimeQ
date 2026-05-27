@@ -6,6 +6,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   initSmoothScroll();
   initProfileModal();
+  initImageViewerModal();
   initImageCarousels();
 });
 
@@ -114,124 +115,137 @@ async function initProfileModal() {
 }
 
 /* =========================================================
-   03. Image Carousels
-   Automatically detects img1, img2, img3...
+   03. Image Carousel State
+========================================================= */
+
+const carouselGalleryStore = new Map();
+
+let activeGalleryKey = null;
+let activeImageIndex = 0;
+let imageViewerModalInstance = null;
+
+/* =========================================================
+   04. Image Carousels
+   Detects img1, img2, img3...
    Supports png, jpg, jpeg, webp
 ========================================================= */
 
-async function initImageCarousels() {
+function initImageCarousels() {
   const carouselCards = document.querySelectorAll("[data-image-carousel]");
 
-  for (const card of carouselCards) {
-    const carousel = card.querySelector(".mini-carousel");
-    const folder = card.getAttribute("data-folder");
-    const altText = card.getAttribute("data-alt") || "Carousel image";
-
-    /*
-      Optional HTML controls:
-      - data-max: maximum image number to check.
-      - data-stop-after: how many missing images in a row before stopping.
-
-      Example:
-      data-max="40"
-      data-stop-after="6"
-    */
-    const maxImagesToCheck = Number(card.getAttribute("data-max")) || 80;
-    const stopAfterMissing = Number(card.getAttribute("data-stop-after")) || 8;
-
-    if (!carousel || !folder) continue;
-
-    carousel.innerHTML = "";
-
-    const track = document.createElement("div");
-    track.className = "mini-carousel-track";
-    carousel.appendChild(track);
-
-    await loadCarouselImagesProgressively({
-      card,
-      track,
-      folder,
-      altText,
-      maxImagesToCheck,
-      stopAfterMissing
-    });
-  }
+  carouselCards.forEach(function (card, carouselIndex) {
+    initSingleCarousel(card, carouselIndex);
+  });
 }
 
-async function loadCarouselImagesProgressively({
-  card,
-  track,
-  folder,
-  altText,
-  maxImagesToCheck,
-  stopAfterMissing
-}) {
-  const loadedImages = [];
+async function initSingleCarousel(card, carouselIndex) {
+  const carousel = card.querySelector(".mini-carousel");
+  const folder = normalizeFolderPath(card.getAttribute("data-folder"));
+  const altText = card.getAttribute("data-alt") || "Carousel image";
+
+  const maxImagesToCheck = Number(card.getAttribute("data-max")) || 40;
+  const stopAfterMissing = Number(card.getAttribute("data-stop-after")) || 6;
+  const extensions = getExtensionOrder(card);
+
+  if (!carousel || !folder) return;
+
+  const galleryKey = `carousel-${carouselIndex}`;
+  const galleryImages = [];
+
+  carouselGalleryStore.set(galleryKey, galleryImages);
+
+  carousel.innerHTML = "";
+
+  const track = document.createElement("div");
+  track.className = "mini-carousel-track";
+
+  const groupA = document.createElement("div");
+  groupA.className = "mini-carousel-group";
+
+  const groupB = document.createElement("div");
+  groupB.className = "mini-carousel-group";
+  groupB.setAttribute("aria-hidden", "true");
+
+  track.appendChild(groupA);
+  track.appendChild(groupB);
+  carousel.appendChild(track);
+
   let missingInARow = 0;
 
   for (let index = 1; index <= maxImagesToCheck; index++) {
-    const imageSrc = await findExistingImageSrc(folder, index);
+    const imageSrc = await findExistingImageSrc(folder, index, extensions);
 
-    if (imageSrc) {
-      const image = {
-        src: imageSrc,
-        alt: `${altText} ${index}`
-      };
-
-      loadedImages.push(image);
-      missingInARow = 0;
-
-      /*
-        Show images immediately as they are found.
-        This prevents the carousel from staying blank while the full folder check runs.
-      */
-      addCarouselItem(track, image);
-
-      /*
-        Once at least 2 images exist, add a duplicate set so the marquee
-        starts feeling continuous while more images keep loading.
-      */
-      if (loadedImages.length === 2) {
-        duplicateCarouselItems(track, loadedImages);
-      }
-
-      /*
-        After the first duplication, every new image also gets a duplicate.
-        This keeps the loop from feeling too short during progressive loading.
-      */
-      if (loadedImages.length > 2) {
-        addCarouselItem(track, image);
-      }
-    } else {
+    if (!imageSrc) {
       missingInARow++;
 
-      /*
-        Stop checking after several missing images in a row.
-        Example: if img1 to img17 exist and img18-img25 do not,
-        it stops after 8 consecutive missing files.
-      */
       if (missingInARow >= stopAfterMissing) {
         break;
       }
+
+      continue;
     }
+
+    missingInARow = 0;
+
+    const image = {
+      src: imageSrc,
+      alt: `${altText} ${index}`
+    };
+
+    const imageIndex = galleryImages.length;
+
+    galleryImages.push(image);
+
+    addCarouselItem({
+      group: groupA,
+      image,
+      galleryKey,
+      imageIndex,
+      isDuplicate: false
+    });
+
+    addCarouselItem({
+      group: groupB,
+      image,
+      galleryKey,
+      imageIndex,
+      isDuplicate: true
+    });
   }
 
-  if (!loadedImages.length) {
+  if (!galleryImages.length) {
     card.classList.add("is-disabled");
-    return;
   }
-
-  /*
-    Final cleanup:
-    Rebuild the carousel with a clean duplicated list.
-    This prevents uneven loops after progressive loading.
-  */
-  rebuildCarouselTrack(track, loadedImages);
 }
 
-function findExistingImageSrc(folder, index) {
-  const extensions = ["png", "jpg", "jpeg", "webp"];
+function normalizeFolderPath(folder) {
+  if (!folder) return "";
 
+  return folder.endsWith("/") ? folder : `${folder}/`;
+}
+
+function getExtensionOrder(card) {
+  const customExtensions = card.getAttribute("data-extensions");
+
+  if (customExtensions) {
+    return customExtensions
+      .split(",")
+      .map(function (extension) {
+        return extension.trim().replace(".", "").toLowerCase();
+      })
+      .filter(Boolean);
+  }
+
+  const folder = card.getAttribute("data-folder") || "";
+
+  if (folder.includes("brands") || folder.includes("certifications")) {
+    return ["png", "jpg", "jpeg", "webp"];
+  }
+
+  return ["jpg", "jpeg", "png", "webp"];
+}
+
+function findExistingImageSrc(folder, index, extensions) {
   return new Promise(function (resolve) {
     let currentExtensionIndex = 0;
 
@@ -261,71 +275,155 @@ function findExistingImageSrc(folder, index) {
   });
 }
 
-function addCarouselItem(track, image) {
+function addCarouselItem({ group, image, galleryKey, imageIndex, isDuplicate }) {
   const item = document.createElement("button");
   item.type = "button";
   item.className = "mini-carousel-item";
   item.setAttribute("aria-label", `Open ${image.alt}`);
-  item.setAttribute("data-full-image", image.src);
-  item.setAttribute("data-full-alt", image.alt);
+  item.setAttribute("data-gallery-key", galleryKey);
+  item.setAttribute("data-gallery-index", String(imageIndex));
+
+  if (isDuplicate) {
+    item.setAttribute("tabindex", "-1");
+  }
 
   const img = document.createElement("img");
   img.src = image.src;
   img.alt = image.alt;
   img.loading = "lazy";
+  img.decoding = "async";
 
   item.addEventListener("click", function () {
-    const fullImageSrc = item.getAttribute("data-full-image");
-    const fullImageAlt = item.getAttribute("data-full-alt") || image.alt;
-
-    if (!fullImageSrc) return;
-
-    openImageViewer(fullImageSrc, fullImageAlt);
+    openImageViewer(galleryKey, imageIndex);
   });
 
   item.appendChild(img);
-  track.appendChild(item);
-}
-
-function duplicateCarouselItems(track, images) {
-  images.forEach(function (image) {
-    addCarouselItem(track, image);
-  });
-}
-
-function rebuildCarouselTrack(track, images) {
-  track.innerHTML = "";
-
-  const duplicatedImages = images.concat(images);
-
-  duplicatedImages.forEach(function (image) {
-    addCarouselItem(track, image);
-  });
+  group.appendChild(item);
 }
 
 /* =========================================================
-   04. Image Viewer Modal
+   05. Image Viewer Modal
+   Includes previous / next navigation
 ========================================================= */
 
-function openImageViewer(imageSrc, imageAlt) {
+function initImageViewerModal() {
   const modalElement = document.getElementById("imageViewerModal");
+
+  if (!modalElement || typeof bootstrap === "undefined") return;
+
+  imageViewerModalInstance = new bootstrap.Modal(modalElement);
+
+  ensureImageViewerControls();
+  bindImageViewerKeyboardControls();
+
+  modalElement.addEventListener("hidden.bs.modal", function () {
+    const viewerImage = document.getElementById("imageViewerImg");
+
+    if (viewerImage) {
+      viewerImage.src = "";
+      viewerImage.alt = "";
+    }
+
+    activeGalleryKey = null;
+    activeImageIndex = 0;
+  });
+}
+
+function ensureImageViewerControls() {
+  const modalElement = document.getElementById("imageViewerModal");
+  const header = modalElement ? modalElement.querySelector(".image-viewer-header") : null;
+
+  if (!header || header.querySelector(".image-viewer-controls")) return;
+
+  const controls = document.createElement("div");
+  controls.className = "image-viewer-controls";
+  controls.setAttribute("aria-label", "Image navigation controls");
+
+  const previousButton = document.createElement("button");
+  previousButton.type = "button";
+  previousButton.className = "image-viewer-nav-btn";
+  previousButton.setAttribute("aria-label", "Previous image");
+  previousButton.innerHTML = `<i class="ph ph-caret-left"></i>`;
+
+  const nextButton = document.createElement("button");
+  nextButton.type = "button";
+  nextButton.className = "image-viewer-nav-btn";
+  nextButton.setAttribute("aria-label", "Next image");
+  nextButton.innerHTML = `<i class="ph ph-caret-right"></i>`;
+
+  previousButton.addEventListener("click", showPreviousImage);
+  nextButton.addEventListener("click", showNextImage);
+
+  controls.appendChild(previousButton);
+  controls.appendChild(nextButton);
+
+  header.insertBefore(controls, header.firstChild);
+}
+
+function bindImageViewerKeyboardControls() {
+  document.addEventListener("keydown", function (event) {
+    if (!activeGalleryKey) return;
+
+    if (event.key === "ArrowLeft") {
+      showPreviousImage();
+    }
+
+    if (event.key === "ArrowRight") {
+      showNextImage();
+    }
+  });
+}
+
+function openImageViewer(galleryKey, imageIndex) {
+  const gallery = carouselGalleryStore.get(galleryKey);
+
+  if (!gallery || !gallery.length || !imageViewerModalInstance) return;
+
+  activeGalleryKey = galleryKey;
+  activeImageIndex = normalizeImageIndex(imageIndex, gallery.length);
+
+  updateImageViewerContent();
+  imageViewerModalInstance.show();
+}
+
+function showPreviousImage() {
+  const gallery = carouselGalleryStore.get(activeGalleryKey);
+
+  if (!gallery || !gallery.length) return;
+
+  activeImageIndex = normalizeImageIndex(activeImageIndex - 1, gallery.length);
+  updateImageViewerContent();
+}
+
+function showNextImage() {
+  const gallery = carouselGalleryStore.get(activeGalleryKey);
+
+  if (!gallery || !gallery.length) return;
+
+  activeImageIndex = normalizeImageIndex(activeImageIndex + 1, gallery.length);
+  updateImageViewerContent();
+}
+
+function normalizeImageIndex(index, total) {
+  if (index < 0) return total - 1;
+  if (index >= total) return 0;
+
+  return index;
+}
+
+function updateImageViewerContent() {
+  const gallery = carouselGalleryStore.get(activeGalleryKey);
   const viewerImage = document.getElementById("imageViewerImg");
   const viewerTitle = document.getElementById("imageViewerTitle");
 
-  if (!modalElement || !viewerImage || typeof bootstrap === "undefined") return;
+  if (!gallery || !gallery.length || !viewerImage) return;
 
-  viewerImage.src = imageSrc;
-  viewerImage.alt = imageAlt;
+  const image = gallery[activeImageIndex];
+
+  viewerImage.src = image.src;
+  viewerImage.alt = image.alt;
 
   if (viewerTitle) {
-    viewerTitle.textContent = imageAlt;
+    viewerTitle.textContent = `${image.alt} · ${activeImageIndex + 1}/${gallery.length}`;
   }
-
-  const imageViewerModal = new bootstrap.Modal(modalElement);
-  imageViewerModal.show();
-
-  modalElement.addEventListener("hidden.bs.modal", function () {
-    viewerImage.src = "";
-    viewerImage.alt = "";
-  }, { once: true });
 }
