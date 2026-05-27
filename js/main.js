@@ -1,8 +1,17 @@
+/* =========================================================
+   JAIME QUESADA PORTFOLIO
+   Main JavaScript
+========================================================= */
+
 document.addEventListener("DOMContentLoaded", function () {
   initSmoothScroll();
   initProfileModal();
   initImageCarousels();
 });
+
+/* =========================================================
+   01. Smooth Scroll
+========================================================= */
 
 function initSmoothScroll() {
   const internalLinks = document.querySelectorAll('a[href^="#"]');
@@ -26,6 +35,11 @@ function initSmoothScroll() {
     });
   });
 }
+
+/* =========================================================
+   02. Profile Story Modal
+   Loads content from json/profile-stories.json
+========================================================= */
 
 async function initProfileModal() {
   const cards = document.querySelectorAll("[data-profile-card]");
@@ -99,6 +113,12 @@ async function initProfileModal() {
   });
 }
 
+/* =========================================================
+   03. Image Carousels
+   Automatically detects img1, img2, img3...
+   Supports png, jpg, jpeg, webp
+========================================================= */
+
 async function initImageCarousels() {
   const carouselCards = document.querySelectorAll("[data-image-carousel]");
 
@@ -108,86 +128,85 @@ async function initImageCarousels() {
     const altText = card.getAttribute("data-alt") || "Carousel image";
 
     /*
-      Optional controls:
+      Optional HTML controls:
       - data-max: maximum image number to check.
       - data-stop-after: how many missing images in a row before stopping.
-      
-      If you do not add these attributes in HTML, defaults are used.
+
+      Example:
+      data-max="40"
+      data-stop-after="6"
     */
     const maxImagesToCheck = Number(card.getAttribute("data-max")) || 80;
     const stopAfterMissing = Number(card.getAttribute("data-stop-after")) || 8;
 
-    if (!carousel || !folder) return;
+    if (!carousel || !folder) continue;
 
-    const images = await findExistingCarouselImages(
+    carousel.innerHTML = "";
+
+    const track = document.createElement("div");
+    track.className = "mini-carousel-track";
+    carousel.appendChild(track);
+
+    await loadCarouselImagesProgressively({
+      card,
+      track,
       folder,
       altText,
       maxImagesToCheck,
       stopAfterMissing
-    );
-
-    if (!images.length) {
-      card.classList.add("is-disabled");
-      return;
-    }
-
-    const track = document.createElement("div");
-    track.className = "mini-carousel-track";
-
-    /*
-      Duplicates the image list so the CSS marquee animation feels continuous.
-    */
-    const duplicatedImages = images.concat(images);
-
-    duplicatedImages.forEach(function (image) {
-      const item = document.createElement("button");
-      item.type = "button";
-      item.className = "mini-carousel-item";
-      item.setAttribute("aria-label", `Open ${image.alt}`);
-      item.setAttribute("data-full-image", image.src);
-      item.setAttribute("data-full-alt", image.alt);
-
-      const img = document.createElement("img");
-      img.src = image.src;
-      img.alt = image.alt;
-      img.loading = "lazy";
-
-      item.addEventListener("click", function () {
-        const fullImageSrc = item.getAttribute("data-full-image");
-        const fullImageAlt = item.getAttribute("data-full-alt") || altText;
-
-        if (!fullImageSrc) return;
-
-        openImageViewer(fullImageSrc, fullImageAlt);
-      });
-
-      item.appendChild(img);
-      track.appendChild(item);
     });
-
-    carousel.appendChild(track);
   }
 }
 
-async function findExistingCarouselImages(folder, altText, maxImagesToCheck, stopAfterMissing) {
-  const images = [];
+async function loadCarouselImagesProgressively({
+  card,
+  track,
+  folder,
+  altText,
+  maxImagesToCheck,
+  stopAfterMissing
+}) {
+  const loadedImages = [];
   let missingInARow = 0;
 
   for (let index = 1; index <= maxImagesToCheck; index++) {
     const imageSrc = await findExistingImageSrc(folder, index);
 
     if (imageSrc) {
-      images.push({
+      const image = {
         src: imageSrc,
         alt: `${altText} ${index}`
-      });
+      };
 
+      loadedImages.push(image);
       missingInARow = 0;
+
+      /*
+        Show images immediately as they are found.
+        This prevents the carousel from staying blank while the full folder check runs.
+      */
+      addCarouselItem(track, image);
+
+      /*
+        Once at least 2 images exist, add a duplicate set so the marquee
+        starts feeling continuous while more images keep loading.
+      */
+      if (loadedImages.length === 2) {
+        duplicateCarouselItems(track, loadedImages);
+      }
+
+      /*
+        After the first duplication, every new image also gets a duplicate.
+        This keeps the loop from feeling too short during progressive loading.
+      */
+      if (loadedImages.length > 2) {
+        addCarouselItem(track, image);
+      }
     } else {
       missingInARow++;
 
       /*
-        This prevents the browser from checking forever.
+        Stop checking after several missing images in a row.
         Example: if img1 to img17 exist and img18-img25 do not,
         it stops after 8 consecutive missing files.
       */
@@ -197,7 +216,17 @@ async function findExistingCarouselImages(folder, altText, maxImagesToCheck, sto
     }
   }
 
-  return images;
+  if (!loadedImages.length) {
+    card.classList.add("is-disabled");
+    return;
+  }
+
+  /*
+    Final cleanup:
+    Rebuild the carousel with a clean duplicated list.
+    This prevents uneven loops after progressive loading.
+  */
+  rebuildCarouselTrack(track, loadedImages);
 }
 
 function findExistingImageSrc(folder, index) {
@@ -214,7 +243,6 @@ function findExistingImageSrc(folder, index) {
 
       const extension = extensions[currentExtensionIndex];
       const imageSrc = `${folder}img${index}.${extension}`;
-
       const testImage = new Image();
 
       testImage.onload = function () {
@@ -232,6 +260,52 @@ function findExistingImageSrc(folder, index) {
     tryNextExtension();
   });
 }
+
+function addCarouselItem(track, image) {
+  const item = document.createElement("button");
+  item.type = "button";
+  item.className = "mini-carousel-item";
+  item.setAttribute("aria-label", `Open ${image.alt}`);
+  item.setAttribute("data-full-image", image.src);
+  item.setAttribute("data-full-alt", image.alt);
+
+  const img = document.createElement("img");
+  img.src = image.src;
+  img.alt = image.alt;
+  img.loading = "lazy";
+
+  item.addEventListener("click", function () {
+    const fullImageSrc = item.getAttribute("data-full-image");
+    const fullImageAlt = item.getAttribute("data-full-alt") || image.alt;
+
+    if (!fullImageSrc) return;
+
+    openImageViewer(fullImageSrc, fullImageAlt);
+  });
+
+  item.appendChild(img);
+  track.appendChild(item);
+}
+
+function duplicateCarouselItems(track, images) {
+  images.forEach(function (image) {
+    addCarouselItem(track, image);
+  });
+}
+
+function rebuildCarouselTrack(track, images) {
+  track.innerHTML = "";
+
+  const duplicatedImages = images.concat(images);
+
+  duplicatedImages.forEach(function (image) {
+    addCarouselItem(track, image);
+  });
+}
+
+/* =========================================================
+   04. Image Viewer Modal
+========================================================= */
 
 function openImageViewer(imageSrc, imageAlt) {
   const modalElement = document.getElementById("imageViewerModal");
